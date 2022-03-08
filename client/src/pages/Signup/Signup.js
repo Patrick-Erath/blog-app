@@ -39,7 +39,6 @@ export default function Signup() {
 
   useEffect(() => {
     if(data){
-      console.log(data)
       if(data.signup.userErrors){
         setError(data.signup.userErrors[0].message);
       }
