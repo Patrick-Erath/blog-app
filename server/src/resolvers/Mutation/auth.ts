@@ -40,6 +40,16 @@ export const authResolvers = {
                 return validateInput;
             }
 
+            var existingUser = await prisma.user.findUnique({
+                where:{
+                    email: credentials.email
+                }
+            });
+
+            if(existingUser){
+                return userErrorMessage("User with this email already exists")
+            }
+
             const hashedPasswod = await bcrypt.hash(credentials.password, 10);
             const user = await prisma.user.create({
                 data: {
@@ -81,13 +91,13 @@ export const authResolvers = {
         });
 
         if(!user){
-            return userErrorMessage("Invalid credentials")
+            return userErrorMessage("Invalid credentials");
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch){
-            return userErrorMessage("Invalid credentials")
+            return userErrorMessage("Invalid credentials");
         }
 
         return {

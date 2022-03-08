@@ -24,7 +24,7 @@ export default function Post({
   id,
   isMyProfile,
 }) {
-  const [publishPost, { data, loading }] = useMutation(PUBLISH_POST)
+  const [publishPost, { data, loading }] = useMutation(PUBLISH_POST);
   let formatedDate = new Date(Number(date));
 
   return (
